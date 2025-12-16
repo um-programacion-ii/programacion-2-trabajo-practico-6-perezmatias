@@ -96,3 +96,28 @@ Se solicitó la capa de interfaz HTTP que permite que otros microservicios (como
 - Uso de `ResponseEntity` para tener control total sobre la respuesta HTTP.
 - Mapeo de verbos HTTP (GET, POST, PUT, DELETE) a operaciones CRUD.
 - Importancia de definir bien las rutas (paths) para que sean intuitivas y RESTful.
+
+---
+
+## Prompt 5: Lógica de Negocio y Controlador API
+
+### Prompt Utilizado:
+Implementa la lógica de negocio en `business-service`.
+1. Crea `ProductoBusinessService` que use `DataServiceClient`.
+2. Implementa validaciones: precio > 0 y stock >= 0 antes de llamar a crear producto.
+3. Agrega un método para calcular el valor total del inventario (precio * cantidad) sumando todos los productos.
+4. Crea `BusinessController` en `/api` que exponga estos métodos, incluyendo endpoints para reportes (/reportes/stock-bajo y /reportes/valor-inventario).
+
+### Respuesta Recibida:
+[Código Java generado para el servicio con validaciones y el controlador REST]
+
+### Modificaciones Realizadas:
+- Se agregó un bloque `try-catch` en el controlador para capturar la `IllegalArgumentException` de la validación y devolver un HTTP 400 (Bad Request) con el mensaje de error.
+- Se implementó el cálculo del valor total usando Java Streams y `reduce` para mayor eficiencia y claridad.
+
+### Explicación del Prompt:
+El objetivo era centralizar las reglas de negocio en este microservicio, dejando al `data-service` solo con la responsabilidad de almacenar datos. Esto cumple con el principio de separación de responsabilidades.
+
+### Aprendizajes Obtenidos:
+- Cómo interceptar y manejar excepciones de negocio para convertirlas en respuestas HTTP adecuadas.
+- Uso de Streams en Java para realizar cálculos agregados sobre listas de DTOs obtenidas de otro servicio.
