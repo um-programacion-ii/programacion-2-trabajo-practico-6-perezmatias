@@ -1,0 +1,21 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: business-service
+  profiles:
+    active: dev
+
+# Configuración personalizada para encontrar el data-service
+data:
+  service:
+    url: http://localhost:8081
+
+# Configuración básica de Feign
+feign:
+  client:
+    config:
+      default:
+        connectTimeout: 5000
+        readTimeout: 5000
