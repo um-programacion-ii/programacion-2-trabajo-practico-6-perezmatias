@@ -1,0 +1,73 @@
+spring:
+  application:
+    name: data-service
+  profiles:
+    active: dev # Por defecto usamos dev (H2)
+
+server:
+  port: 8081
+
+# --- CONFIGURACIÓN DEV (H2) ---
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  datasource:
+    url: jdbc:h2:mem:testdb
+    driver-class-name: org.h2.Driver
+    username: sa
+    password:
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    hibernate:
+      ddl-auto: create-drop # En dev, borramos todo al reiniciar
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+# --- CONFIGURACIÓN MYSQL ---
+---
+spring:
+  config:
+    activate:
+      on-profile: mysql
+  datasource:
+    # URL compatible con el contenedor Docker que crearemos luego
+    url: jdbc:mysql://localhost:3306/microservices_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: microservices_user
+    password: microservices_pass
+  jpa:
+    hibernate:
+      ddl-auto: update # En prod, solo actualizamos esquema
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+        format_sql: true
+
+# --- CONFIGURACIÓN POSTGRESQL ---
+---
+spring:
+  config:
+    activate:
+      on-profile: postgres
+  datasource:
+    # URL compatible con el contenedor Docker que crearemos luego
+    url: jdbc:postgresql://localhost:5432/microservices_db
+    driver-class-name: org.postgresql.Driver
+    username: microservices_user
+    password: microservices_pass
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
