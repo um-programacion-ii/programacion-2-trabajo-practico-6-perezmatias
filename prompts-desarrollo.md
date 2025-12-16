@@ -43,3 +43,28 @@ El prompt se diseñó para trasladar los requisitos de base de datos del README 
 ### Aprendizajes Obtenidos:
 - Diferencia entre @OneToMany y @ManyToOne y cómo el atributo 'mappedBy' define quién es el dueño de la relación.
 - Uso de CascadeType.ALL para propagar operaciones (si borro un producto, se borra su inventario).
+
+---
+
+## Prompt 3: Implementación de Repositorios y Servicios
+
+### Prompt Utilizado:
+Implementa la capa de acceso a datos y lógica de negocio para el microservicio de datos.
+1. Crea interfaces JpaRepository para Categoria, Producto e Inventario.
+2. Agrega métodos personalizados: buscar producto por nombre de categoría, buscar inventario por ID de producto, y buscar inventario con stock bajo (cantidad <= stockMinimo).
+3. Implementa clases @Service transaccionales que utilicen estos repositorios para realizar operaciones CRUD básicas.
+4. Asegúrate de manejar la relación bidireccional entre Producto e Inventario al guardar.
+
+### Respuesta Recibida:
+[Código Java generado para los 3 repositorios y los 3 servicios con la lógica solicitada]
+
+### Modificaciones Realizadas:
+- Se añadió lógica manual en `ProductoService.actualizar` para manejar correctamente la actualización de la entidad anidada Inventario sin romper la relación JPA.
+- Se utilizó `@Query` personalizado en InventarioRepository para la lógica de stock bajo.
+
+### Explicación del Prompt:
+Se solicitó la creación de la capa intermedia que conecta los controladores (que haremos después) con la base de datos, encapsulando las consultas específicas requeridas en los casos de uso del TP (como el reporte de stock bajo).
+
+### Aprendizajes Obtenidos:
+- Importancia de `@Transactional` para asegurar la integridad de datos.
+- Cómo usar "Derived Query Methods" de Spring Data (ej: `findByCategoriaNombre`) para evitar escribir SQL manualmente.
