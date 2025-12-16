@@ -121,3 +121,28 @@ El objetivo era centralizar las reglas de negocio en este microservicio, dejando
 ### Aprendizajes Obtenidos:
 - Cómo interceptar y manejar excepciones de negocio para convertirlas en respuestas HTTP adecuadas.
 - Uso de Streams en Java para realizar cálculos agregados sobre listas de DTOs obtenidas de otro servicio.
+
+---
+
+## Prompt 6: Configuración de Profiles (H2, MySQL, PostgreSQL)
+
+### Prompt Utilizado:
+Configura el archivo `application.yml` del microservicio de datos para soportar tres perfiles diferentes usando documentos YAML múltiples (separador '---'):
+1. Profile `dev`: Base H2 en memoria, ddl-auto=create-drop.
+2. Profile `mysql`: Conexión a MySQL en localhost:3306, base `microservices_db`, usuario/pass `microservices_user/microservices_pass`, ddl-auto=update.
+3. Profile `postgres`: Conexión a PostgreSQL en localhost:5432, mismas credenciales, ddl-auto=update.
+   El puerto del servidor debe ser 8081 para todos los perfiles.
+
+### Respuesta Recibida:
+[Configuración YAML completa con los tres bloques activados por `on-profile`]
+
+### Modificaciones Realizadas:
+- Se agregó el parámetro `allowPublicKeyRetrieval=true` en la URL de MySQL para evitar errores comunes de conexión SSL en entornos de desarrollo Docker.
+- Se especificaron los dialectos de Hibernate explícitamente para MySQL y PostgreSQL para asegurar la generación correcta de SQL.
+
+### Explicación del Prompt:
+Se requería flexibilidad para cambiar el motor de base de datos sin recompilar el código, simplemente cambiando una variable de entorno o argumento de lanzamiento (`-Dspring.profiles.active=mysql`).
+
+### Aprendizajes Obtenidos:
+- Cómo usar la sintaxis multudocumento de YAML para tener todas las configuraciones en un solo archivo limpio.
+- La diferencia crítica entre `create-drop` (para pruebas rápidas) y `update` (para persistencia real).
