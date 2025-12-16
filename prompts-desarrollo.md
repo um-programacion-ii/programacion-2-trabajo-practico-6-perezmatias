@@ -68,3 +68,31 @@ Se solicitó la creación de la capa intermedia que conecta los controladores (q
 ### Aprendizajes Obtenidos:
 - Importancia de `@Transactional` para asegurar la integridad de datos.
 - Cómo usar "Derived Query Methods" de Spring Data (ej: `findByCategoriaNombre`) para evitar escribir SQL manualmente.
+
+---
+
+## Prompt 4: Implementación de Controlador REST
+
+### Prompt Utilizado:
+Crea una clase `DataController` anotada con `@RestController` y `@RequestMapping("/data")` para exponer los servicios de datos.
+Necesito los siguientes endpoints para cumplir con los diagramas de secuencia:
+1. CRUD completo de Productos (GET, POST, PUT, DELETE).
+2. GET para obtener productos por nombre de categoría.
+3. GET para listar todas las categorías y POST para crear nuevas.
+4. GET para obtener inventario con stock bajo y por ID de producto.
+   Usa `ResponseEntity` para manejar los códigos de estado HTTP correctamente (200 OK, 201 Created, 204 No Content).
+
+### Respuesta Recibida:
+[Código Java del DataController con todos los endpoints mapeados a los servicios correspondientes]
+
+### Modificaciones Realizadas:
+- Se agregaron anotaciones `@Valid` en los métodos de creación y actualización para asegurar que las validaciones de las entidades funcionen.
+- Se unificó todo en un solo controlador `/data` para simplificar la configuración del Feign Client más adelante, tal como se muestra en el ejemplo del README.
+
+### Explicación del Prompt:
+Se solicitó la capa de interfaz HTTP que permite que otros microservicios (como business-service) interactúen con la base de datos sin conocer los detalles de JPA, cumpliendo con la arquitectura de microservicios.
+
+### Aprendizajes Obtenidos:
+- Uso de `ResponseEntity` para tener control total sobre la respuesta HTTP.
+- Mapeo de verbos HTTP (GET, POST, PUT, DELETE) a operaciones CRUD.
+- Importancia de definir bien las rutas (paths) para que sean intuitivas y RESTful.
